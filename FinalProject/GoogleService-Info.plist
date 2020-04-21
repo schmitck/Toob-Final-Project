@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>697671383273-48f980hi6rjl7185luijv3uc7g9lgett.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.697671383273-48f980hi6rjl7185luijv3uc7g9lgett</string>
+	<key>API_KEY</key>
+	<string>AIzaSyB6QLu6MsbGbBzssGg6rK85gTtxf5RX1bE</string>
+	<key>GCM_SENDER_ID</key>
+	<string>697671383273</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>schmitck.FinalProject</string>
+	<key>PROJECT_ID</key>
+	<string>coob-toob</string>
+	<key>STORAGE_BUCKET</key>
+	<string>coob-toob.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:697671383273:ios:993773546301fc1c881878</string>
+	<key>DATABASE_URL</key>
+	<string>https://coob-toob.firebaseio.com</string>
+</dict>
+</plist>
