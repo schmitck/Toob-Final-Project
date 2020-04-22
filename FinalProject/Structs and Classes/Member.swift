@@ -14,6 +14,7 @@ class Member {
   var place: String
   var coordinate: CLLocationCoordinate2D
   var isSelected: Bool
+  var averageRating: Double
   var postingUserID: String
   var documentID: String
   
@@ -31,19 +32,20 @@ class Member {
   
   
   var dictionary: [String:Any] {
-    return ["place": place, "longitude": longitude, "latitude": latitude, "isSelected": isSelected, "postingUserID": postingUserID]
+    return ["place": place, "longitude": longitude, "latitude": latitude, "isSelected": isSelected, "averageRating": averageRating, "postingUserID": postingUserID]
   }
   
-  init(place: String, coordinate: CLLocationCoordinate2D, isSelected: Bool, postingUserID: String, documentID: String) {
+  init(place: String, coordinate: CLLocationCoordinate2D, isSelected: Bool, averageRating: Double, postingUserID: String, documentID: String) {
     self.place = place
     self.coordinate = coordinate
     self.isSelected = isSelected
+    self.averageRating = averageRating
     self.postingUserID = postingUserID
     self.documentID = documentID
   }
   
   convenience init() {
-    self.init(place: "", coordinate: CLLocationCoordinate2D(), isSelected: false, postingUserID: "", documentID: "")
+    self.init(place: "", coordinate: CLLocationCoordinate2D(), isSelected: false, averageRating: 0.0, postingUserID: "", documentID: "")
   }
   
   convenience init(dictionary: [String:Any]) {
@@ -51,10 +53,11 @@ class Member {
     let longitude = dictionary["longitude"] as! Double? ?? 0.0
     let latitude = dictionary["latitude"] as! Double? ?? 0.0
     let isSelected = dictionary["isSelected"] as! Bool? ?? false
+    let averageRating = dictionary["averageRating"] as! Double? ?? 0.0
     let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
     let postingUserID = dictionary["postingUserID"] as! String? ?? ""
     
-    self.init(place: place, coordinate: coordinate, isSelected:isSelected, postingUserID: postingUserID, documentID: "")
+    self.init(place: place, coordinate: coordinate, isSelected:isSelected, averageRating: averageRating, postingUserID: postingUserID, documentID: "")
   }
  
  func saveData(completed: @escaping (Bool) -> ()) {

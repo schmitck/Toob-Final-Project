@@ -20,6 +20,7 @@ class AddNewSpotViewController: UIViewController {
   var rating = [1,2,3,4,5,6,7,8,9,10]
   var post: Post!
   var member: Member!
+  var postNumber: Int = 0
   var imagePicker = UIImagePickerController()
   
   override func viewDidLoad() {
@@ -31,13 +32,41 @@ class AddNewSpotViewController: UIViewController {
       return
     }
     if post == nil {
-      post = Post(spot: member.place, rating: 0, description: "", date: Date(), postingUserID: "", documentID: "")
+      post = Post()
     }
     ratingPickerView.delegate = self
     ratingPickerView.dataSource = self
-    
+    print(postNumber)
     }
     
+  
+  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    
+    let destination = segue.destination as! SpotDetailController
+    let posts = destination.posts
+    var totalRatingsCount = destination.totalRatingsCount
+    var averageRating = destination.averageRating
+    let member = destination.member
+    
+    for post in posts.postsArray {
+      print(post.rating)
+      totalRatingsCount = totalRatingsCount + Double(post.rating)
+    }
+    averageRating = totalRatingsCount/Double(posts.postsArray.count)
+    print("This is the total ratings! \(totalRatingsCount) and this is the average \(averageRating) from \(posts.postsArray.count) posts!")
+    
+    member!.averageRating = averageRating
+    member!.saveData { (success) in
+      if success {
+        print("saved the average rating!")
+      }
+    }
+    print("viewDidAppear")
+    posts.postsArray.sort(by: {$0.postNumber > $1.postNumber})
+       print(posts.postsArray)
+    destination.postsTableView.reloadData()
+  }
+  
   func leaveViewController() {
       dismiss(animated: true, completion: nil)
   }
@@ -52,6 +81,9 @@ class AddNewSpotViewController: UIViewController {
   
   @IBAction func saveButtonPressed(_ sender: UIBarButtonItem) {
     post.description = newSpotTextView.text
+    print(post.postNumber)
+    post.postNumber = postNumber + 1
+    print(post.postNumber)
     post.saveData(member: member) { (success) in
       if success {
           self.leaveViewController()

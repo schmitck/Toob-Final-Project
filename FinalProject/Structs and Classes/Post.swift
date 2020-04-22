@@ -14,6 +14,7 @@ import FirebaseUI
 class Post {
   var spot: String
   var rating: Int
+  var postNumber: Int
   var description: String
   var postingUserID: String
   var documentID: String
@@ -22,12 +23,13 @@ class Post {
   
   
   var dictionary: [String:Any] {
-    return ["spot": spot, "rating": rating, "description": description, "date": date, "postingUserID": postingUserID]
+    return ["spot": spot, "rating": rating, "postNumber": postNumber, "description": description, "date": date, "postingUserID": postingUserID]
   }
   
-  init(spot: String, rating: Int, description: String, date: Date, postingUserID: String, documentID: String) {
+  init(spot: String, rating: Int, postNumber: Int, description: String, date: Date, postingUserID: String, documentID: String) {
     self.spot = spot
     self.rating = rating
+    self.postNumber = postNumber
     self.description = description
     self.postingUserID = postingUserID
     self.documentID = documentID
@@ -36,19 +38,20 @@ class Post {
   
   convenience init() {
     let currentUserID = Auth.auth().currentUser?.email ?? "Unknown User"
-    self.init(spot: "", rating: 0, description: "", date: Date(), postingUserID: currentUserID, documentID: "")
+    self.init(spot: "", rating: 0, postNumber: 0, description: "", date: Date(), postingUserID: currentUserID, documentID: "")
     
   }
   
   convenience init(dictionary: [String:Any]) {
     let spot = dictionary["spot"] as! String? ?? ""
     let rating = dictionary["rating"] as! Int? ?? 0
+    let postNumber = dictionary["postNumber"] as! Int? ?? 0
     let postingUserID = dictionary["postingUserID"] as! String? ?? ""
     let firebaseDate = dictionary["date"] as! Timestamp? ?? Timestamp()
     let date = firebaseDate.dateValue()
     let description = dictionary["description"] as! String? ?? ""
     
-    self.init(spot: spot, rating: rating, description: description, date: date, postingUserID: postingUserID, documentID: "")
+    self.init(spot: spot, rating: rating, postNumber:postNumber, description: description, date: date, postingUserID: postingUserID, documentID: "")
   }
   
   func saveData(member: Member, completed: @escaping (Bool) -> ()) {
@@ -58,7 +61,7 @@ class Post {
       //check to see if we have saved a record, we will have a documentID
       if self.documentID != "" {
         //this is where we want to work
-       let reference = db.collection("members").document(member.documentID).collection("posts").document(self.documentID)
+       let reference = db.collection("spots").document(member.documentID).collection("posts").document(self.documentID)
         reference.setData(dataToSave) { error in
           if let error = error {
             print("***ERROR: Updating document \(self.documentID) in spot \(member.documentID) \(error.localizedDescription)")
@@ -70,7 +73,7 @@ class Post {
         }
       } else {
         var reference: DocumentReference? = nil
-       reference = db.collection("members").document(member.documentID).collection("posts").addDocument(data: dataToSave) { error in
+       reference = db.collection("spots").document(member.documentID).collection("posts").addDocument(data: dataToSave) { error in
           if let error = error {
             print("***ERROR: Updating document \(self.documentID) \(error.localizedDescription)")
             completed(false)

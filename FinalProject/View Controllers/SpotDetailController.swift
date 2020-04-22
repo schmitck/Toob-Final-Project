@@ -24,35 +24,91 @@ import UIKit
 
 
 class SpotDetailController: UIViewController {
-
+  
   @IBOutlet weak var postsTableView: UITableView!
   
   let posts = Posts()
   var member: Member!
+  var totalRatingsCount: Double = 0
+  var averageRating: Double = 0
   
   override func viewDidLoad() {
-        super.viewDidLoad()
+    super.viewDidLoad()
     postsTableView.dataSource = self
     postsTableView.delegate = self
-    
+    posts.loadData(member: member) {
+      self.postsTableView.reloadData()
+      print("viewdidload")
     }
-    
+  }
+  
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    posts.loadData(member: member) {
-      self.posts.postsArray.reverse()
-      self.postsTableView.reloadData()
+    print("viewwillappear")
+  }
+  
+  override func viewDidAppear(_ animated: Bool) {
+    for post in posts.postsArray {
+      print(post.rating)
+      totalRatingsCount = totalRatingsCount + Double(post.rating)
     }
+    averageRating = totalRatingsCount/Double(posts.postsArray.count)
+    print("This is the total ratings! \(totalRatingsCount) and this is the average \(averageRating) from \(posts.postsArray.count) posts!")
+    
+    member.averageRating = averageRating
+    member.saveData { (success) in
+      if success {
+        print("saved the average rating!")
+      }
+    }
+    print("viewDidAppear")
+    posts.postsArray.sort(by: {$0.postNumber > $1.postNumber})
+       print(posts.postsArray)
+       postsTableView.reloadData()
   }
   
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-    let navigationController = segue.destination as! UINavigationController
-    let destination = navigationController.viewControllers.first as! AddNewSpotViewController
-    destination.member = member
-    if let selectedIndexPath = postsTableView.indexPathForSelectedRow {
-      postsTableView.deselectRow(at: selectedIndexPath, animated: true)
+    if let navigationController = segue.destination as? UINavigationController {
+      let destination = navigationController.viewControllers.first as! AddNewSpotViewController
+      destination.member = member
+      destination.postNumber = posts.postsArray.first?.postNumber ?? 0
+      if let selectedIndexPath = postsTableView.indexPathForSelectedRow {
+        destination.postNumber = posts.postsArray[selectedIndexPath.row].postNumber
+        postsTableView.deselectRow(at: selectedIndexPath, animated: true)
+      }
+    } else {
+      let otherDestination = segue.destination as! ViewController
+      otherDestination.member.saveData { (success) in
+        if success {
+          print("saving average data")
+        }
+      }
     }
   }
+  
+  @IBAction func unwindFromAddNewSpot(segue: UIStoryboardSegue) {
+    let source = segue.source as! AddNewSpotViewController
+    print("‼️Unwind working")
+    for post in posts.postsArray {
+      print(post.rating)
+      totalRatingsCount = totalRatingsCount + Double(post.rating)
+    }
+    averageRating = totalRatingsCount/Double(posts.postsArray.count)
+    print("This is the total ratings! \(totalRatingsCount) and this is the average \(averageRating) from \(posts.postsArray.count) posts!")
+    
+    member.averageRating = averageRating
+    member.saveData { (success) in
+      if success {
+        print("saved the average rating!")
+      }
+    }
+    print("viewDidAppear")
+    posts.postsArray.sort(by: {$0.postNumber > $1.postNumber})
+       print(posts.postsArray)
+       postsTableView.reloadData()
+    
+   }
+  
   
   func dateFormat(date: Date, format: String) -> String {
     let dateFormatter = DateFormatter()
@@ -60,7 +116,6 @@ class SpotDetailController: UIViewController {
     let dateString = dateFormatter.string(from: date)
     return dateString
   }
-  
 }
 
 extension SpotDetailController: UITableViewDelegate, UITableViewDataSource {
@@ -79,7 +134,7 @@ extension SpotDetailController: UITableViewDelegate, UITableViewDataSource {
   }
   
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    return 250
+    return 320
   }
   
 }

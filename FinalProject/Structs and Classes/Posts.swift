@@ -22,7 +22,7 @@ class Posts {
        return
      }
       //add snapshot listener
-     db.collection("members").document(member.documentID).collection("posts").addSnapshotListener { (querySnapshot, error) in
+     db.collection("spots").document(member.documentID).collection("posts").addSnapshotListener { (querySnapshot, error) in
         //if we get any changes in spots the listner is going to go off
         guard error == nil else {
           print("***ERROR: adding the snapshot listerner \(error?.localizedDescription)")

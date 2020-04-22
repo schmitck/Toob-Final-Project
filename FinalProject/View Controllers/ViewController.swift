@@ -91,7 +91,7 @@ class ViewController: UIViewController {
   }
   
   @IBAction func unwindFromDetail(segue: UIStoryboardSegue) {
-    let source = segue.source as! NewSpotViewController
+    if let source = segue.source as? NewSpotViewController {
     let newMember = source.choosenSpot!
     print(newMember.isSelected)
     newMember.isSelected = true
@@ -105,6 +105,7 @@ class ViewController: UIViewController {
       }
     }
     self.homeTableView.reloadData()
+  }
   }
   
   @IBAction func signOutPressed(_ sender: UIButton) {
@@ -144,6 +145,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
     let cell = homeTableView.dequeueReusableCell(withIdentifier: "HomePageCell", for: indexPath) as! HomePageTableViewCell
     cell.spotLabel.text = selectedMembers.memberArray[indexPath.row].place
     cell.distanceLabel.text = "\(selectedMembers.memberArray[indexPath.row].latitude), \(selectedMembers.memberArray[indexPath.row].longitude)"
+    cell.ratingLabel.text = "\(selectedMembers.memberArray[indexPath.row].averageRating)"
     cell.homePageImage?.roundBorder(cornerRadius: 20, width: 0, color: .init(genericGrayGamma2_2Gray: 1, alpha: 1))
     return cell
     
