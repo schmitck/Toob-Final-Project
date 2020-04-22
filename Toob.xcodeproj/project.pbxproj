@@ -14,9 +14,10 @@
 		341FD5A1244F282100A22FCC /* UIImageView+roundedImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341FD5A0244F282100A22FCC /* UIImageView+roundedImages.swift */; };
 		341FD5A3244F37B100A22FCC /* Spots.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341FD5A2244F37B000A22FCC /* Spots.swift */; };
 		341FD5A5244F3E4F00A22FCC /* NewSpotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341FD5A4244F3E4F00A22FCC /* NewSpotViewController.swift */; };
-		341FD5A7244F4CA800A22FCC /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341FD5A6244F4CA800A22FCC /* User.swift */; };
-		341FD5A9244F4D0800A22FCC /* Users.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341FD5A8244F4D0800A22FCC /* Users.swift */; };
+		341FD5A7244F4CA800A22FCC /* Member.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341FD5A6244F4CA800A22FCC /* Member.swift */; };
+		341FD5A9244F4D0800A22FCC /* Members.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341FD5A8244F4D0800A22FCC /* Members.swift */; };
 		341FD5B0244F727200A22FCC /* SpotDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341FD5AF244F727200A22FCC /* SpotDetailCell.swift */; };
+		341FD5B6244F864300A22FCC /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341FD5B5244F864300A22FCC /* Photo.swift */; };
 		3453746F244E3DCC00354A72 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3453746E244E3DCC00354A72 /* AppDelegate.swift */; };
 		34537471244E3DCC00354A72 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34537470244E3DCC00354A72 /* SceneDelegate.swift */; };
 		34537473244E3DCC00354A72 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34537472244E3DCC00354A72 /* ViewController.swift */; };
@@ -38,9 +39,10 @@
 		341FD5A0244F282100A22FCC /* UIImageView+roundedImages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+roundedImages.swift"; sourceTree = "<group>"; };
 		341FD5A2244F37B000A22FCC /* Spots.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spots.swift; sourceTree = "<group>"; };
 		341FD5A4244F3E4F00A22FCC /* NewSpotViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewSpotViewController.swift; sourceTree = "<group>"; };
-		341FD5A6244F4CA800A22FCC /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		341FD5A8244F4D0800A22FCC /* Users.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Users.swift; sourceTree = "<group>"; };
+		341FD5A6244F4CA800A22FCC /* Member.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Member.swift; sourceTree = "<group>"; };
+		341FD5A8244F4D0800A22FCC /* Members.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Members.swift; sourceTree = "<group>"; };
 		341FD5AF244F727200A22FCC /* SpotDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotDetailCell.swift; sourceTree = "<group>"; };
+		341FD5B5244F864300A22FCC /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
 		3453746B244E3DCC00354A72 /* FinalProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FinalProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3453746E244E3DCC00354A72 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		34537470244E3DCC00354A72 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -130,12 +132,13 @@
 		34537484244E44F700354A72 /* Structs and Classes */ = {
 			isa = PBXGroup;
 			children = (
-				34537485244E453900354A72 /* Post.swift */,
-				34537492244E61A800354A72 /* Posts.swift */,
 				34537490244E5FCE00354A72 /* Spot.swift */,
 				341FD5A2244F37B000A22FCC /* Spots.swift */,
-				341FD5A6244F4CA800A22FCC /* User.swift */,
-				341FD5A8244F4D0800A22FCC /* Users.swift */,
+				341FD5A6244F4CA800A22FCC /* Member.swift */,
+				341FD5A8244F4D0800A22FCC /* Members.swift */,
+				34537485244E453900354A72 /* Post.swift */,
+				34537492244E61A800354A72 /* Posts.swift */,
+				341FD5B5244F864300A22FCC /* Photo.swift */,
 			);
 			path = "Structs and Classes";
 			sourceTree = "<group>";
@@ -145,9 +148,9 @@
 			children = (
 				34537472244E3DCC00354A72 /* ViewController.swift */,
 				34537489244E4DD200354A72 /* SpotDetailController.swift */,
-				341FD5A4244F3E4F00A22FCC /* NewSpotViewController.swift */,
 				3453748E244E5BC400354A72 /* AddNewSpotViewController.swift */,
 				341FD59C244E8A9500A22FCC /* ProfilePageViewController.swift */,
+				341FD5A4244F3E4F00A22FCC /* NewSpotViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -302,10 +305,11 @@
 				341FD5A5244F3E4F00A22FCC /* NewSpotViewController.swift in Sources */,
 				34537471244E3DCC00354A72 /* SceneDelegate.swift in Sources */,
 				341FD59D244E8A9500A22FCC /* ProfilePageViewController.swift in Sources */,
-				341FD5A9244F4D0800A22FCC /* Users.swift in Sources */,
-				341FD5A7244F4CA800A22FCC /* User.swift in Sources */,
+				341FD5A9244F4D0800A22FCC /* Members.swift in Sources */,
+				341FD5A7244F4CA800A22FCC /* Member.swift in Sources */,
 				3453748A244E4DD200354A72 /* SpotDetailController.swift in Sources */,
 				34537491244E5FCE00354A72 /* Spot.swift in Sources */,
+				341FD5B6244F864300A22FCC /* Photo.swift in Sources */,
 				341FD5A1244F282100A22FCC /* UIImageView+roundedImages.swift in Sources */,
 				341FD5B0244F727200A22FCC /* SpotDetailCell.swift in Sources */,
 				341FD59F244E936A00A22FCC /* UIView+addBorder.swift in Sources */,

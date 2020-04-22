@@ -8,28 +8,58 @@
 
 import UIKit
 
+//private let dateFormatter: DateFormatter = {
+//    //just created a DATEFORMATTER
+//    let dateFormatter = DateFormatter()
+//    dateFormatter.dateFormat = "EEEE"
+//    return dateFormatter
+//}()
+//
+//private let hourlyFormatter: DateFormatter = {
+//    //just created a DATEFORMATTER
+//    let dateFormatter = DateFormatter()
+//    dateFormatter.dateFormat = "h aaaa"
+//    return dateFormatter
+//}()
+
+
 class SpotDetailController: UIViewController {
 
-  @IBOutlet weak var spotTableView: UITableView!
+  @IBOutlet weak var postsTableView: UITableView!
   
   let posts = Posts()
-  var postSpot = ""
+  var member: Member!
   
   override func viewDidLoad() {
         super.viewDidLoad()
-    spotTableView.dataSource = self
-    spotTableView.delegate = self
-    postSpot = self.title ?? ""
+    postsTableView.dataSource = self
+    postsTableView.delegate = self
     
     }
     
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    posts.loadData {
-      self.spotTableView.reloadData()
+    posts.loadData(member: member) {
+      self.posts.postsArray.reverse()
+      self.postsTableView.reloadData()
     }
   }
   
+  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    let navigationController = segue.destination as! UINavigationController
+    let destination = navigationController.viewControllers.first as! AddNewSpotViewController
+    destination.member = member
+    if let selectedIndexPath = postsTableView.indexPathForSelectedRow {
+      postsTableView.deselectRow(at: selectedIndexPath, animated: true)
+    }
+  }
+  
+  func dateFormat(date: Date, format: String) -> String {
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = format
+    let dateString = dateFormatter.string(from: date)
+    return dateString
+  }
   
 }
 
@@ -39,9 +69,12 @@ extension SpotDetailController: UITableViewDelegate, UITableViewDataSource {
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = spotTableView.dequeueReusableCell(withIdentifier: "SpotCell", for: indexPath) as! SpotDetailCell
+    let cell = postsTableView.dequeueReusableCell(withIdentifier: "SpotCell", for: indexPath) as! SpotDetailCell
     cell.ratingLabel.text = "\(posts.postsArray[indexPath.row].rating)"
     cell.descriptionLabel.text = posts.postsArray[indexPath.row].description
+    cell.dateLabel.text = dateFormat(date: posts.postsArray[indexPath.row].date, format: "MMM d, yyyy")
+    cell.timeLabel.text = dateFormat(date: posts.postsArray[indexPath.row].date, format: "h:mm a")
+    cell.postedImage?.roundBorder(cornerRadius: 30, width: 0, color: .init(genericGrayGamma2_2Gray: 1, alpha: 1))
     return cell
   }
   

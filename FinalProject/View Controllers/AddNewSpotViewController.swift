@@ -8,6 +8,7 @@
 
 import UIKit
 import Foundation
+import Contacts
 
 class AddNewSpotViewController: UIViewController {
 
@@ -18,17 +19,22 @@ class AddNewSpotViewController: UIViewController {
   @IBOutlet weak var ratingLabel: UILabel!
   var rating = [1,2,3,4,5,6,7,8,9,10]
   var post: Post!
+  var member: Member!
+  var imagePicker = UIImagePickerController()
+  
   override func viewDidLoad() {
         super.viewDidLoad()
 
     newSpotTextView.addBorder(width: 0.5, radius: 5, color: .gray)
-    
+    guard let member = member else {
+      print("***ERROR: Did not have a valid spot in review detail VC")
+      return
+    }
     if post == nil {
-      post = Post()
+      post = Post(spot: member.place, rating: 0, description: "", date: Date(), postingUserID: "", documentID: "")
     }
     ratingPickerView.delegate = self
     ratingPickerView.dataSource = self
-    
     
     }
     
@@ -36,32 +42,41 @@ class AddNewSpotViewController: UIViewController {
       dismiss(animated: true, completion: nil)
   }
   
-  @IBAction func saveButtonPressed(_ sender: UIBarButtonItem) {
-    post.description = newSpotTextView.text
-    post.saveData { (success) in
-      if success {
-        self.leaveViewController()
-      } else {
-        print("Error: Couldn't leave this view controller because the data was not saved.")
-      }
-    }
+  func showAlert(title: String, message: String) {
+    let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+    let alertAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+    alertController.addAction(alertAction)
+    present(alertController, animated: true, completion: nil)
   }
   
+  
+  @IBAction func saveButtonPressed(_ sender: UIBarButtonItem) {
+    post.description = newSpotTextView.text
+    post.saveData(member: member) { (success) in
+      if success {
+          self.leaveViewController()
+        } else {
+          print("Error: Couldn't leave this view controller because the data was not saved.")
+        }
+      }
+    }
+    
   @IBAction func cancelButtonPressed(_ sender: UIBarButtonItem) {
     leaveViewController()
   }
   
-  
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+  @IBAction func takePhotoButtonPressed(_ sender: UIButton) {
+    let alertController = UIAlertController(title: "", message: "", preferredStyle: .alert)
+    let cameraAction = UIAlertAction(title: "Camera", style: .default) { _ in
+      self.accessCamera()
     }
-    */
-
+  }
+  
+  
+  @IBAction func photoLibraryButtonPressed(_ sender: UIButton) {
+  }
+  
+  
 }
 
 extension AddNewSpotViewController: UIPickerViewDataSource, UIPickerViewDelegate {
@@ -80,5 +95,30 @@ extension AddNewSpotViewController: UIPickerViewDataSource, UIPickerViewDelegate
   
   func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
     ratingLabel.text = "\(rating[row])"
+  }
+}
+
+
+
+extension AddNewSpotViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+  func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+  }
+  
+  func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+    dismiss(animated: true, completion: nil)
+  }
+  
+  func accessLibrary() {
+    imagePicker.sourceType = .photoLibrary
+    present(imagePicker, animated: true, completion: nil)
+  }
+  
+  func accessCamera() {
+    if UIImagePickerController.isSourceTypeAvailable(.camera) {
+      imagePicker.sourceType = .camera
+         present(imagePicker, animated: true, completion: nil)
+    } else {
+      showAlert(title: "Camera not available!", message: "There is no camera available to use on this device.")
+    }
   }
 }

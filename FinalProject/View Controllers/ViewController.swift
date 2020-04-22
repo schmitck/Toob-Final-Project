@@ -13,8 +13,13 @@ import FirebaseUI
 
 class ViewController: UIViewController {
   
+  @IBOutlet weak var searchButton: UIBarButtonItem!
   @IBOutlet weak var homeTableView: UITableView!
   var members: Members!
+  var selectedMembers: Members!
+  var member: Member!
+  var spot: Spot!
+  var spots: Spots!
   var authUI: FUIAuth!
   
   override func viewDidLoad() {
@@ -22,26 +27,46 @@ class ViewController: UIViewController {
     authUI = FUIAuth.defaultAuthUI()
     authUI.delegate = self
     members = Members()
+    spots = Spots()
+    selectedMembers = Members()
     homeTableView.dataSource = self
     homeTableView.delegate = self
+    spot = Spot(spot: "", coordinate: CLLocationCoordinate2D(), documentID: "")
+    print("viewdid")
   }
+  
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     members.loadData {
+      self.selectedMembers = Members()
+      for member in self.members.memberArray {
+        if member.isSelected == true {
+          print("🗣🗣🗣\(member.place) has beens selected because \(member.isSelected) reads true")
+          self.selectedMembers.memberArray.append(member)
+        }
+      }
       self.homeTableView.reloadData()
     }
+    print("viewWill")
   }
+  
+  
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
     signIn()
+    print("viewDidAppear")
+    
   }
   
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-    let destination = segue.destination as! SpotDetailController
+    if segue.identifier == "SpotDetail" {
+      let destination = segue.destination as! SpotDetailController
       let selectedIndexPath = homeTableView.indexPathForSelectedRow
-    destination.title = members.memberArray[selectedIndexPath!.row].place
+      destination.title = selectedMembers.memberArray[selectedIndexPath!.row].place
+      destination.member = selectedMembers.memberArray[selectedIndexPath!.row]
+      homeTableView.deselectRow(at: selectedIndexPath!, animated: true)
+    }
   }
-  
   
   func showAlert(title: String, message: String) {
     let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
@@ -67,23 +92,23 @@ class ViewController: UIViewController {
   
   @IBAction func unwindFromDetail(segue: UIStoryboardSegue) {
     let source = segue.source as! NewSpotViewController
-    let newIndexPath = IndexPath(row: members.memberArray.count, section: 0)
-    let newMember = Member(place: source.selectedSpot!.spot, coordinate: source.selectedSpot!.coordinate, postingUserID: "", documentID: "")
+    let newMember = source.choosenSpot!
+    print(newMember.isSelected)
+    newMember.isSelected = true
+    print(newMember.isSelected)
+    selectedMembers = Members()
     newMember.saveData { (success) in
       if success {
-        print("Success saving data!")
+        print("😁Updated value")
       } else {
-        print("Failure to save newMember")
+        print("No update")
       }
     }
-      members.memberArray.append(newMember)
-       
-       homeTableView.insertRows(at: [newIndexPath], with: .bottom)
-       homeTableView.scrollToRow(at: newIndexPath, at: .bottom, animated: true)
+    self.homeTableView.reloadData()
   }
   
-  
   @IBAction func signOutPressed(_ sender: UIButton) {
+    //TODO: MAYBE TRY TO PRESENT A SEGUE TO THE HOMEPAGE FIRST AND THEN MAKE THE DO TRY THINGY EXECUTE FROM AN UNWIND FROM DETAIL?
     do {
       try authUI!.signOut()
       print("‼️Sign out Worked")
@@ -94,17 +119,31 @@ class ViewController: UIViewController {
     }
   }
   
+  @IBAction func editButtonPressed(_ sender: UIBarButtonItem) {
+    if homeTableView.isEditing {
+      homeTableView.setEditing(false, animated: true)
+      sender.title = "Edit"
+      searchButton.isEnabled = true
+    } else {
+      homeTableView.setEditing(true, animated: true)
+      sender.title = "Done"
+      searchButton.isEnabled = false
+    }
+  }
+  
+  
+  
 }
 
 extension ViewController: UITableViewDataSource, UITableViewDelegate {
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return members.memberArray.count
+    return selectedMembers.memberArray.count
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = homeTableView.dequeueReusableCell(withIdentifier: "HomePageCell", for: indexPath) as! HomePageTableViewCell
-    cell.spotLabel.text = members.memberArray[indexPath.row].place
-    cell.distanceLabel.text = "\(members.memberArray[indexPath.row].latitude), \(members.memberArray[indexPath.row].longitude)"
+    cell.spotLabel.text = selectedMembers.memberArray[indexPath.row].place
+    cell.distanceLabel.text = "\(selectedMembers.memberArray[indexPath.row].latitude), \(selectedMembers.memberArray[indexPath.row].longitude)"
     cell.homePageImage?.roundBorder(cornerRadius: 20, width: 0, color: .init(genericGrayGamma2_2Gray: 1, alpha: 1))
     return cell
     
@@ -114,6 +153,27 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
     return 200
   }
   
+  func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+    if editingStyle == .delete {
+      selectedMembers.memberArray[indexPath.row].isSelected = false
+      selectedMembers.memberArray[indexPath.row].saveData { (success) in
+        if success {
+          print("‼️Successfuly updated the data")
+        } else {
+          print("‼️back to the drawing board")
+        }
+      }
+    }
+    selectedMembers.memberArray.remove(at: indexPath.row)
+    homeTableView.deleteRows(at: [indexPath], with: .fade)
+    selectedMembers = Members()
+  }
+  
+  func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+    let itemToMove = selectedMembers.memberArray[sourceIndexPath.row]
+    selectedMembers.memberArray.remove(at: sourceIndexPath.row)
+    selectedMembers.memberArray.insert(itemToMove, at: destinationIndexPath.row)
+  }
 }
 
 extension ViewController: FUIAuthDelegate {

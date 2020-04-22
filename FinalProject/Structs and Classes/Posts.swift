@@ -17,9 +17,12 @@ class Posts {
     db = Firestore.firestore()
   }
   
-  func loadData(completed: @escaping () -> ()) {
+  func loadData(member: Member, completed: @escaping () -> ()) {
+     guard member.documentID != "" else {
+       return
+     }
       //add snapshot listener
-      db.collection("posts").addSnapshotListener { (querySnapshot, error) in
+     db.collection("members").document(member.documentID).collection("posts").addSnapshotListener { (querySnapshot, error) in
         //if we get any changes in spots the listner is going to go off
         guard error == nil else {
           print("***ERROR: adding the snapshot listerner \(error?.localizedDescription)")
@@ -29,9 +32,9 @@ class Posts {
         self.postsArray = []
         //there are querySnapshot documnets
         for document in querySnapshot!.documents {
-          //loads a dictionary up
+          //loads a dictioKKnary up
           let post = Post(dictionary: document.data())
-  //        spot.documentID = document.documentID
+          post.documentID = document.documentID
           self.postsArray.append(post)
         }
         completed()
