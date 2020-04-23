@@ -37,8 +37,9 @@ class SpotDetailController: UIViewController {
     postsTableView.dataSource = self
     postsTableView.delegate = self
     posts.loadData(member: member) {
-      self.postsTableView.reloadData()
       print("viewdidload")
+      self.posts.postsArray.sort(by: {$0.postNumber > $1.postNumber})
+      self.postsTableView.reloadData()
     }
   }
   
@@ -58,13 +59,10 @@ class SpotDetailController: UIViewController {
     member.averageRating = averageRating
     member.saveData { (success) in
       if success {
-        print("saved the average rating!")
+        print("saved the average rating! VIEWDIDAPPEAR")
       }
     }
     print("viewDidAppear")
-    posts.postsArray.sort(by: {$0.postNumber > $1.postNumber})
-       print(posts.postsArray)
-       postsTableView.reloadData()
   }
   
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -76,19 +74,34 @@ class SpotDetailController: UIViewController {
         destination.postNumber = posts.postsArray[selectedIndexPath.row].postNumber
         postsTableView.deselectRow(at: selectedIndexPath, animated: true)
       }
-    } else {
-      let otherDestination = segue.destination as! ViewController
-      otherDestination.member.saveData { (success) in
-        if success {
-          print("saving average data")
-        }
-      }
     }
+    
+  }
+  
+  
+  
+  
+  func dateFormat(date: Date, format: String) -> String {
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = format
+    let dateString = dateFormatter.string(from: date)
+    return dateString
   }
   
   @IBAction func unwindFromAddNewSpot(segue: UIStoryboardSegue) {
     let source = segue.source as! AddNewSpotViewController
-    print("‼️Unwind working")
+    let newPost = source.post!
+    newPost.description = source.newSpotTextView.text
+    newPost.postNumber = source.postNumber + 1
+    newPost.saveData(member: source.member) { (success) in
+        if success {
+              print("")
+            } else {
+              print("Error: Couldn't leave this view controller because the data was not saved.")
+            }
+    }
+    posts.postsArray.append(newPost)
+    totalRatingsCount = 0
     for post in posts.postsArray {
       print(post.rating)
       totalRatingsCount = totalRatingsCount + Double(post.rating)
@@ -99,23 +112,16 @@ class SpotDetailController: UIViewController {
     member.averageRating = averageRating
     member.saveData { (success) in
       if success {
-        print("saved the average rating!")
+        print("saved the average rating! VIEWDIDAPPEAR")
       }
     }
-    print("viewDidAppear")
-    posts.postsArray.sort(by: {$0.postNumber > $1.postNumber})
-       print(posts.postsArray)
-       postsTableView.reloadData()
-    
-   }
-  
-  
-  func dateFormat(date: Date, format: String) -> String {
-    let dateFormatter = DateFormatter()
-    dateFormatter.dateFormat = format
-    let dateString = dateFormatter.string(from: date)
-    return dateString
   }
+  
+  
+  @IBAction func backButtonPressed(_ sender: Any) {
+    navigationController?.popViewController(animated: true)
+  }
+  
 }
 
 extension SpotDetailController: UITableViewDelegate, UITableViewDataSource {

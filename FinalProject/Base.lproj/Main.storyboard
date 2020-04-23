@@ -43,7 +43,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="97Y-jc-dxU" kind="unwind" unwindAction="unwindFromDetailWithSegue:" id="Rn7-Qw-q3m"/>
+                                            <segue destination="97Y-jc-dxU" kind="unwind" identifier="unwindFromAddNewSpot" unwindAction="unwindFromDetailWithSegue:" id="Rn7-Qw-q3m"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -115,21 +115,21 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Today's Rating" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cC7-v7-0Nw">
-                                                            <rect key="frame" x="222" y="1" width="98" height="21"/>
+                                                            <rect key="frame" x="219" y="1" width="98" height="21"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" name="HiraginoSans-W7" family="Hiragino Sans" pointSize="10"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="8.8" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="54S-Uv-QF3">
-                                                            <rect key="frame" x="241" y="19" width="79" height="26"/>
+                                                            <rect key="frame" x="237" y="19" width="80" height="26"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" name="HiraginoSans-W3" family="Hiragino Sans" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="surf" translatesAutoresizingMaskIntoConstraints="NO" id="NkM-I9-3NE">
-                                                            <rect key="frame" x="0.0" y="53" width="320" height="141"/>
+                                                            <rect key="frame" x="-5" y="51" width="322" height="141"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         </imageView>
                                                     </subviews>
@@ -243,7 +243,7 @@
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="need to figure out max characters to make sure it doesn't go over" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LWf-uA-2lr">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="need to figure out max characters to make sure it doesn't go over" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LWf-uA-2lr">
                                                             <rect key="frame" x="15" y="261" width="305" height="50"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" name="HiraginoSans-W3" family="Hiragino Sans" pointSize="10"/>
@@ -277,6 +277,11 @@
                         <viewLayoutGuide key="safeArea" id="C9v-hP-e0f"/>
                     </view>
                     <navigationItem key="navigationItem" title="Spot Name" id="oWS-sX-0JF">
+                        <barButtonItem key="leftBarButtonItem" title="&lt; Favorites" id="Tkf-iz-Nlp">
+                            <connections>
+                                <segue destination="ZcJ-ga-6nU" kind="unwind" identifier="unwindFromDetail" unwindAction="unwindFromDetailWithSegue:" id="BSe-ff-RHf"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="compose" id="mjb-zx-qR4">
                             <connections>
                                 <segue destination="zAv-TJ-QI3" kind="presentation" id="2gI-jh-a84"/>
@@ -288,6 +293,7 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7e4-ir-jD7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="ZcJ-ga-6nU" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="2336.25" y="126.7605633802817"/>
         </scene>
@@ -372,6 +378,7 @@
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="iqL-UC-tSK">
                             <connections>
                                 <action selector="saveButtonPressed:" destination="fe5-jj-TLD" id="zuC-yn-sae"/>
+                                <segue destination="CRO-hM-seJ" kind="unwind" identifier="unwindFromAddNewSpot" unwindAction="unwindFromAddNewSpotWithSegue:" id="L5p-o0-jAm"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -383,6 +390,7 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Aq8-0M-VPu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="CRO-hM-seJ" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="4558" y="127"/>
         </scene>

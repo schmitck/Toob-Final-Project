@@ -22,12 +22,12 @@ class AddNewSpotViewController: UIViewController {
   var member: Member!
   var postNumber: Int = 0
   var imagePicker = UIImagePickerController()
-  
+  var photos: Photos!
   override func viewDidLoad() {
         super.viewDidLoad()
 
     newSpotTextView.addBorder(width: 0.5, radius: 5, color: .gray)
-    guard let member = member else {
+    guard member != nil else {
       print("***ERROR: Did not have a valid spot in review detail VC")
       return
     }
@@ -36,35 +36,15 @@ class AddNewSpotViewController: UIViewController {
     }
     ratingPickerView.delegate = self
     ratingPickerView.dataSource = self
+    imagePicker.delegate = self
     print(postNumber)
+    photos = Photos()
     }
     
   
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-    
-    let destination = segue.destination as! SpotDetailController
-    let posts = destination.posts
-    var totalRatingsCount = destination.totalRatingsCount
-    var averageRating = destination.averageRating
-    let member = destination.member
-    
-    for post in posts.postsArray {
-      print(post.rating)
-      totalRatingsCount = totalRatingsCount + Double(post.rating)
-    }
-    averageRating = totalRatingsCount/Double(posts.postsArray.count)
-    print("This is the total ratings! \(totalRatingsCount) and this is the average \(averageRating) from \(posts.postsArray.count) posts!")
-    
-    member!.averageRating = averageRating
-    member!.saveData { (success) in
-      if success {
-        print("saved the average rating!")
-      }
-    }
-    print("viewDidAppear")
-    posts.postsArray.sort(by: {$0.postNumber > $1.postNumber})
-       print(posts.postsArray)
-    destination.postsTableView.reloadData()
+    post.description = newSpotTextView.text
+    post.postNumber = post.postNumber + 1
   }
   
   func leaveViewController() {
@@ -80,17 +60,18 @@ class AddNewSpotViewController: UIViewController {
   
   
   @IBAction func saveButtonPressed(_ sender: UIBarButtonItem) {
-    post.description = newSpotTextView.text
-    print(post.postNumber)
-    post.postNumber = postNumber + 1
-    print(post.postNumber)
-    post.saveData(member: member) { (success) in
-      if success {
-          self.leaveViewController()
-        } else {
-          print("Error: Couldn't leave this view controller because the data was not saved.")
-        }
-      }
+//    post.description = newSpotTextView.text
+//    print(post.postNumber)
+//    post.postNumber = postNumber + 1
+//    print(post.postNumber)
+//    post.saveData(member: member) { (success) in
+//      if success {
+//          self.leaveViewController()
+//        } else {
+//          print("Error: Couldn't leave this view controller because the data was not saved.")
+//        }
+//      }
+    print("SAVED BUTTON HAS BEEN PRESSED")
     }
     
   @IBAction func cancelButtonPressed(_ sender: UIBarButtonItem) {
@@ -98,14 +79,26 @@ class AddNewSpotViewController: UIViewController {
   }
   
   @IBAction func takePhotoButtonPressed(_ sender: UIButton) {
-    let alertController = UIAlertController(title: "", message: "", preferredStyle: .alert)
+    let alertController = UIAlertController(title: "Want to Take a Photo?", message: "Click on Camera!", preferredStyle: .alert)
     let cameraAction = UIAlertAction(title: "Camera", style: .default) { _ in
       self.accessCamera()
     }
+    let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+    alertController.addAction(cameraAction)
+    alertController.addAction(cancelAction)
+    present(alertController, animated: true, completion: nil)
   }
   
   
   @IBAction func photoLibraryButtonPressed(_ sender: UIButton) {
+    let alertController = UIAlertController(title: "Want to Select a Photo?", message: "Click on Library!", preferredStyle: .alert)
+    let cameraAction = UIAlertAction(title: "Photo Library", style: .default) { _ in
+      self.accessLibrary()
+    }
+    let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+    alertController.addAction(cameraAction)
+    alertController.addAction(cancelAction)
+    present(alertController, animated: true, completion: nil)
   }
   
   
@@ -134,6 +127,14 @@ extension AddNewSpotViewController: UIPickerViewDataSource, UIPickerViewDelegate
 
 extension AddNewSpotViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
   func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+    let photo = Photo()
+    photo.image = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
+    photos.photoArray.append(photo)
+    dismiss(animated: true) {
+//      photo.saveData(member: self.member) { (success) in
+//        //
+//      }
+    }
   }
   
   func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
@@ -154,3 +155,4 @@ extension AddNewSpotViewController: UINavigationControllerDelegate, UIImagePicke
     }
   }
 }
+

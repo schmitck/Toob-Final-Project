@@ -30,6 +30,8 @@
 		3453748F244E5BC400354A72 /* AddNewSpotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3453748E244E5BC400354A72 /* AddNewSpotViewController.swift */; };
 		34537491244E5FCE00354A72 /* Spot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34537490244E5FCE00354A72 /* Spot.swift */; };
 		34537493244E61A800354A72 /* Posts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34537492244E61A800354A72 /* Posts.swift */; };
+		345447AA2450F847008EE1F0 /* Photos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 345447A92450F847008EE1F0 /* Photos.swift */; };
+		3465CF432450EBE900753020 /* roundTo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3465CF422450EBE900753020 /* roundTo.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -57,6 +59,8 @@
 		3453748E244E5BC400354A72 /* AddNewSpotViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewSpotViewController.swift; sourceTree = "<group>"; };
 		34537490244E5FCE00354A72 /* Spot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spot.swift; sourceTree = "<group>"; };
 		34537492244E61A800354A72 /* Posts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Posts.swift; sourceTree = "<group>"; };
+		345447A92450F847008EE1F0 /* Photos.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photos.swift; sourceTree = "<group>"; };
+		3465CF422450EBE900753020 /* roundTo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = roundTo.swift; sourceTree = "<group>"; };
 		6C20BF10EE54137A779C71DA /* Pods-FinalProject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FinalProject.debug.xcconfig"; path = "Target Support Files/Pods-FinalProject/Pods-FinalProject.debug.xcconfig"; sourceTree = "<group>"; };
 		74CF1A07B54C2ACE59B67A92 /* Pods-FinalProject.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FinalProject.release.xcconfig"; path = "Target Support Files/Pods-FinalProject/Pods-FinalProject.release.xcconfig"; sourceTree = "<group>"; };
 		A4A4AE59CFB9B5163DBC3B70 /* Pods_FinalProject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FinalProject.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -116,6 +120,7 @@
 				3453746E244E3DCC00354A72 /* AppDelegate.swift */,
 				34537470244E3DCC00354A72 /* SceneDelegate.swift */,
 				341FD59E244E936900A22FCC /* UIView+addBorder.swift */,
+				3465CF422450EBE900753020 /* roundTo.swift */,
 				341FD5A0244F282100A22FCC /* UIImageView+roundedImages.swift */,
 				34537484244E44F700354A72 /* Structs and Classes */,
 				3453748D244E5A9400354A72 /* View Controllers */,
@@ -139,6 +144,7 @@
 				34537485244E453900354A72 /* Post.swift */,
 				34537492244E61A800354A72 /* Posts.swift */,
 				341FD5B5244F864300A22FCC /* Photo.swift */,
+				345447A92450F847008EE1F0 /* Photos.swift */,
 			);
 			path = "Structs and Classes";
 			sourceTree = "<group>";
@@ -299,11 +305,13 @@
 			files = (
 				34537473244E3DCC00354A72 /* ViewController.swift in Sources */,
 				3453748F244E5BC400354A72 /* AddNewSpotViewController.swift in Sources */,
+				3465CF432450EBE900753020 /* roundTo.swift in Sources */,
 				34537486244E453900354A72 /* Post.swift in Sources */,
 				341FD5A3244F37B100A22FCC /* Spots.swift in Sources */,
 				3453746F244E3DCC00354A72 /* AppDelegate.swift in Sources */,
 				341FD5A5244F3E4F00A22FCC /* NewSpotViewController.swift in Sources */,
 				34537471244E3DCC00354A72 /* SceneDelegate.swift in Sources */,
+				345447AA2450F847008EE1F0 /* Photos.swift in Sources */,
 				341FD59D244E8A9500A22FCC /* ProfilePageViewController.swift in Sources */,
 				341FD5A9244F4D0800A22FCC /* Members.swift in Sources */,
 				341FD5A7244F4CA800A22FCC /* Member.swift in Sources */,
