@@ -78,7 +78,12 @@ class SpotDetailController: UIViewController {
   }
   
   
-  
+  func showAlert(title: String, message: String) {
+    let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+    let alertAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+    alertController.addAction(alertAction)
+    present(alertController, animated: true, completion: nil)
+  }
   
   func dateFormat(date: Date, format: String) -> String {
     let dateFormatter = DateFormatter()
@@ -88,6 +93,7 @@ class SpotDetailController: UIViewController {
   }
   
   @IBAction func unwindFromAddNewSpot(segue: UIStoryboardSegue) {
+    
     let source = segue.source as! AddNewSpotViewController
     let newPost = source.post!
     newPost.description = source.newSpotTextView.text
@@ -121,7 +127,6 @@ class SpotDetailController: UIViewController {
          self.posts.postsArray.sort(by: {$0.postNumber > $1.postNumber})
          self.postsTableView.reloadData()
        }
-    
     self.postsTableView.reloadData()
   }
   

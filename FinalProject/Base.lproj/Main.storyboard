@@ -90,7 +90,7 @@
                                 <rect key="frame" x="0.0" y="44" width="320" height="475"/>
                                 <subviews>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="w32-kA-eg1">
-                                        <rect key="frame" x="0.0" y="26" width="320" height="481"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="475"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <prototypes>
@@ -145,16 +145,6 @@
                                             </tableViewCell>
                                         </prototypes>
                                     </tableView>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="urG-5J-icp">
-                                        <rect key="frame" x="130" y="-5" width="60" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" title="Sign Out">
-                                            <color key="titleColor" systemColor="systemPinkColor" red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="signOutPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="aOr-ra-wNJ"/>
-                                        </connections>
-                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             </view>
@@ -309,7 +299,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0fE-My-tWx">
                                 <rect key="frame" x="0.0" y="56" width="320" height="492"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="waveform.path.ecg" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="nsF-sn-sZz">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="tooblogo" translatesAutoresizingMaskIntoConstraints="NO" id="nsF-sn-sZz">
                                         <rect key="frame" x="8" y="9" width="304" height="189"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                     </imageView>
@@ -379,7 +369,6 @@
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="iqL-UC-tSK">
                             <connections>
                                 <action selector="saveButtonPressed:" destination="fe5-jj-TLD" id="zuC-yn-sae"/>
-                                <segue destination="CRO-hM-seJ" kind="unwind" identifier="unwindFromAddNewSpot" unwindAction="unwindFromAddNewSpotWithSegue:" id="L5p-o0-jAm"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -388,6 +377,7 @@
                         <outlet property="ratingLabel" destination="Pxt-Ei-ODP" id="vb3-NC-Twg"/>
                         <outlet property="ratingPickerView" destination="W43-R6-1Xn" id="UuO-E4-mVE"/>
                         <outlet property="takenOrChosenImage" destination="nsF-sn-sZz" id="dCb-wW-L7z"/>
+                        <segue destination="CRO-hM-seJ" kind="unwind" identifier="unwindFromAddNewSpot" unwindAction="unwindFromAddNewSpotWithSegue:" id="wb8-Dz-Vj7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Aq8-0M-VPu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -446,36 +436,18 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1hc-Kw-e6h">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="519"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MZq-74-CFr">
-                                        <rect key="frame" x="199" y="19" width="106" height="83"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="User Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qe3-AK-GVq">
-                                        <rect key="frame" x="8" y="19" width="132" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Location" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hSt-1k-Zx6">
-                                        <rect key="frame" x="8" y="81" width="132" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZaQ-P7-DVM">
-                                        <rect key="frame" x="222" y="110" width="60" height="30"/>
+                                        <rect key="frame" x="130" y="481" width="60" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <state key="normal" title="Sign Out">
                                             <color key="titleColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
-                                            <action selector="signOutButtonPressed:" destination="ZTk-EW-5bQ" eventType="touchUpInside" id="Kro-dY-L7a"/>
+                                            <action selector="signOutButtonPressed:" destination="ZTk-EW-5bQ" eventType="touchUpInside" id="O8H-Mk-q0V"/>
                                         </connections>
                                     </button>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="x4y-Rs-h6O">
-                                        <rect key="frame" x="0.0" y="164" width="320" height="355"/>
+                                        <rect key="frame" x="0.0" y="92" width="320" height="381"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="SAE-qa-cse">
@@ -502,6 +474,13 @@
                                             </collectionViewCell>
                                         </cells>
                                     </collectionView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Your Photos." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zaf-Fz-AIL">
+                                        <rect key="frame" x="8" y="8" width="304" height="45"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="CourierNewPSMT" family="Courier New" pointSize="24"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             </view>
@@ -518,9 +497,6 @@
                     <tabBarItem key="tabBarItem" title="Profile" image="person.crop.circle.fill" catalog="system" id="sxl-0R-pmj"/>
                     <connections>
                         <outlet property="collectionView" destination="x4y-Rs-h6O" id="GRW-eQ-wAe"/>
-                        <outlet property="profileImage" destination="MZq-74-CFr" id="iaC-nI-ks7"/>
-                        <outlet property="userLocationLabel" destination="hSt-1k-Zx6" id="YmJ-hb-h22"/>
-                        <outlet property="userNameLabel" destination="Qe3-AK-GVq" id="wFV-6w-536"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="koO-E6-mmt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -569,6 +545,6 @@
         <image name="person.crop.circle.fill" catalog="system" width="64" height="60"/>
         <image name="surf" width="6000" height="4000"/>
         <image name="surf2" width="4608" height="3072"/>
-        <image name="waveform.path.ecg" catalog="system" width="64" height="62"/>
+        <image name="tooblogo" width="1022" height="1022"/>
     </resources>
 </document>

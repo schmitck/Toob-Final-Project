@@ -119,18 +119,6 @@ class ViewController: UIViewController {
     
   }
   
-  @IBAction func signOutPressed(_ sender: UIButton) {
-    //TODO: MAYBE TRY TO PRESENT A SEGUE TO THE HOMEPAGE FIRST AND THEN MAKE THE DO TRY THINGY EXECUTE FROM AN UNWIND FROM DETAIL?
-    do {
-      try authUI!.signOut()
-      print("‼️Sign out Worked")
-      homeTableView.isHidden = true
-      signIn()
-    } catch {
-      print("Error! Couldn't sign out.")
-    }
-  }
-  
   @IBAction func editButtonPressed(_ sender: UIBarButtonItem) {
     if homeTableView.isEditing {
       homeTableView.setEditing(false, animated: true)

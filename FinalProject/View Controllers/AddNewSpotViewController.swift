@@ -26,7 +26,7 @@ class AddNewSpotViewController: UIViewController {
   var photos: Photos!
   override func viewDidLoad() {
     super.viewDidLoad()
-    
+    takenOrChosenImage.image = UIImage(named: "tooblogo")
     newSpotTextView.addBorder(width: 0.5, radius: 5, color: .gray)
     guard member != nil else {
       print("***ERROR: Did not have a valid spot in review detail VC")
@@ -47,11 +47,6 @@ class AddNewSpotViewController: UIViewController {
     post.description = newSpotTextView.text
     post.postNumber = post.postNumber + 1
     post.image = takenOrChosenImage.image
-//    self.post.savePhoto(member: member) { (success) in
-//      if success {
-//        print("Saved the photo!")
-//      }
-//    }
   }
   
   func leaveViewController() {
@@ -67,18 +62,14 @@ class AddNewSpotViewController: UIViewController {
   
   
   @IBAction func saveButtonPressed(_ sender: UIBarButtonItem) {
-    //    post.description = newSpotTextView.text
-    //    print(post.postNumber)
-    //    post.postNumber = postNumber + 1
-    //    print(post.postNumber)
-    //    post.saveData(member: member) { (success) in
-    //      if success {
-    //          self.leaveViewController()
-    //        } else {
-    //          print("Error: Couldn't leave this view controller because the data was not saved.")
-    //        }
-    //      }
-    print("SAVED BUTTON HAS BEEN PRESSED")
+    if takenOrChosenImage.image == UIImage(named: "tooblogo") {
+      showAlert(title: "Must Include Photo in Post", message: "In order to share the stoke with all, you must post a photo of the waves.")
+    } else {
+      self.performSegue(withIdentifier: "unwindFromAddNewSpot", sender: self)
+      print("SAVED BUTTON HAS BEEN PRESSED")
+    }
+    
+  
   }
   
   @IBAction func cancelButtonPressed(_ sender: UIBarButtonItem) {
@@ -135,27 +126,9 @@ extension AddNewSpotViewController: UIPickerViewDataSource, UIPickerViewDelegate
 extension AddNewSpotViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
   func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info:
     [UIImagePickerController.InfoKey : Any]) {
-    
-    //    post.image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage
-    //    dismiss(animated: true) {
-    //      self.post.savePhoto(member: self.member) { (success) in
-    //        if success {
-    //          self.posts.pos}
-    //      }
-    //    }
-    
-    
     takenOrChosenImage.image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage
-//    self.post.savePhoto(member: member) { (success) in
-//      if success {
-//        print("Saved the photo!")
-//      } else {
-//        print("Did not save the photo!")
-//      }
-//    }
     dismiss(animated: true) {
     }
-    
   }
   
   func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
