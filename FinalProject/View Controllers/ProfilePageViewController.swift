@@ -8,14 +8,58 @@
 
 import UIKit
 import Firebase
+import FirebaseUI
 
 class ProfilePageViewController: UIViewController {
-    override func viewDidLoad() {
-        super.viewDidLoad()
- 
+  
+  @IBOutlet weak var userNameLabel: UILabel!
+  @IBOutlet weak var profileImage: UIImageView!
+  @IBOutlet weak var userLocationLabel: UILabel!
+  @IBOutlet weak var collectionView: UICollectionView!
+  var posts = Posts()
+  var userPosts: [Post] = []
+  var members = Members()
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    collectionView.delegate = self
+    collectionView.dataSource = self
+  }
+  
+  override func viewWillAppear(_ animated: Bool) {
+    members.loadData {
+      for member in self.members.memberArray{
+        self.posts.loadData(member: member) {
+          for post in self.posts.postsArray {
+            if post.postingUserID == Auth.auth().currentUser!.email {
+              self.userPosts.append(post)
+            }
+          }
+        }
+      }
     }
+  }
+  
+  
+  
+  
   
 }
+
+extension ProfilePageViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    return userPosts.count
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ProfileCell", for: indexPath) as! ProfileCollectionViewCell
+    return cell
+  }
+  
+  
+}
+
+
 
 //extension ViewController: FUIAuthDelegate {
 //  func application(_ app: UIApplication, open url: URL,

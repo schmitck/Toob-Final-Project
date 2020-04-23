@@ -11,7 +11,7 @@ import Foundation
 import Contacts
 
 class AddNewSpotViewController: UIViewController {
-
+  
   @IBOutlet weak var takenOrChosenImage: UIImageView!
   @IBOutlet weak var newSpotTextView: UITextView!
   @IBOutlet weak var ratingPickerView: UIPickerView!
@@ -20,12 +20,13 @@ class AddNewSpotViewController: UIViewController {
   var rating = [1,2,3,4,5,6,7,8,9,10]
   var post: Post!
   var member: Member!
+  var photo: Photo!
   var postNumber: Int = 0
   var imagePicker = UIImagePickerController()
   var photos: Photos!
   override func viewDidLoad() {
-        super.viewDidLoad()
-
+    super.viewDidLoad()
+    
     newSpotTextView.addBorder(width: 0.5, radius: 5, color: .gray)
     guard member != nil else {
       print("***ERROR: Did not have a valid spot in review detail VC")
@@ -39,16 +40,22 @@ class AddNewSpotViewController: UIViewController {
     imagePicker.delegate = self
     print(postNumber)
     photos = Photos()
-    }
-    
+  }
+  
   
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     post.description = newSpotTextView.text
     post.postNumber = post.postNumber + 1
+    post.image = takenOrChosenImage.image
+//    self.post.savePhoto(member: member) { (success) in
+//      if success {
+//        print("Saved the photo!")
+//      }
+//    }
   }
   
   func leaveViewController() {
-      dismiss(animated: true, completion: nil)
+    dismiss(animated: true, completion: nil)
   }
   
   func showAlert(title: String, message: String) {
@@ -60,20 +67,20 @@ class AddNewSpotViewController: UIViewController {
   
   
   @IBAction func saveButtonPressed(_ sender: UIBarButtonItem) {
-//    post.description = newSpotTextView.text
-//    print(post.postNumber)
-//    post.postNumber = postNumber + 1
-//    print(post.postNumber)
-//    post.saveData(member: member) { (success) in
-//      if success {
-//          self.leaveViewController()
-//        } else {
-//          print("Error: Couldn't leave this view controller because the data was not saved.")
-//        }
-//      }
+    //    post.description = newSpotTextView.text
+    //    print(post.postNumber)
+    //    post.postNumber = postNumber + 1
+    //    print(post.postNumber)
+    //    post.saveData(member: member) { (success) in
+    //      if success {
+    //          self.leaveViewController()
+    //        } else {
+    //          print("Error: Couldn't leave this view controller because the data was not saved.")
+    //        }
+    //      }
     print("SAVED BUTTON HAS BEEN PRESSED")
-    }
-    
+  }
+  
   @IBAction func cancelButtonPressed(_ sender: UIBarButtonItem) {
     leaveViewController()
   }
@@ -126,15 +133,29 @@ extension AddNewSpotViewController: UIPickerViewDataSource, UIPickerViewDelegate
 
 
 extension AddNewSpotViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
-  func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-    let photo = Photo()
-    photo.image = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
-    photos.photoArray.append(photo)
-    dismiss(animated: true) {
-//      photo.saveData(member: self.member) { (success) in
-//        //
+  func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info:
+    [UIImagePickerController.InfoKey : Any]) {
+    
+    //    post.image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage
+    //    dismiss(animated: true) {
+    //      self.post.savePhoto(member: self.member) { (success) in
+    //        if success {
+    //          self.posts.pos}
+    //      }
+    //    }
+    
+    
+    takenOrChosenImage.image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage
+//    self.post.savePhoto(member: member) { (success) in
+//      if success {
+//        print("Saved the photo!")
+//      } else {
+//        print("Did not save the photo!")
 //      }
+//    }
+    dismiss(animated: true) {
     }
+    
   }
   
   func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
@@ -149,7 +170,7 @@ extension AddNewSpotViewController: UINavigationControllerDelegate, UIImagePicke
   func accessCamera() {
     if UIImagePickerController.isSourceTypeAvailable(.camera) {
       imagePicker.sourceType = .camera
-         present(imagePicker, animated: true, completion: nil)
+      present(imagePicker, animated: true, completion: nil)
     } else {
       showAlert(title: "Camera not available!", message: "There is no camera available to use on this device.")
     }

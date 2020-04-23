@@ -24,6 +24,10 @@ class ViewController: UIViewController {
   var averageRating: Double = 0
   override func viewDidLoad() {
     super.viewDidLoad()
+    let logo = UIImage(named: "tooblogo")
+    let imageView = UIImageView(image: logo)
+    imageView.contentMode = .scaleAspectFit
+    self.navigationItem.titleView = imageView
     authUI = FUIAuth.defaultAuthUI()
     authUI.delegate = self
     spots = Spots()

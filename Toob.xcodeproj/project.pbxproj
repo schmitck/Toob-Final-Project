@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2F49D2E24AD86790DB34D257 /* Pods_FinalProject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4A4AE59CFB9B5163DBC3B70 /* Pods_FinalProject.framework */; };
+		34148E332452207700F2EDF3 /* ProfileCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34148E322452207700F2EDF3 /* ProfileCollectionViewCell.swift */; };
 		341FD59B244E807700A22FCC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 341FD59A244E807700A22FCC /* GoogleService-Info.plist */; };
 		341FD59D244E8A9500A22FCC /* ProfilePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341FD59C244E8A9500A22FCC /* ProfilePageViewController.swift */; };
 		341FD59F244E936A00A22FCC /* UIView+addBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341FD59E244E936900A22FCC /* UIView+addBorder.swift */; };
@@ -35,6 +36,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		34148E322452207700F2EDF3 /* ProfileCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCollectionViewCell.swift; sourceTree = "<group>"; };
 		341FD59A244E807700A22FCC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		341FD59C244E8A9500A22FCC /* ProfilePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePageViewController.swift; sourceTree = "<group>"; };
 		341FD59E244E936900A22FCC /* UIView+addBorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+addBorder.swift"; sourceTree = "<group>"; };
@@ -91,6 +93,7 @@
 			isa = PBXGroup;
 			children = (
 				34537482244E43F500354A72 /* HomePageTableViewCell.swift */,
+				34148E322452207700F2EDF3 /* ProfileCollectionViewCell.swift */,
 				341FD5AF244F727200A22FCC /* SpotDetailCell.swift */,
 			);
 			path = Cells;
@@ -313,6 +316,7 @@
 				34537471244E3DCC00354A72 /* SceneDelegate.swift in Sources */,
 				345447AA2450F847008EE1F0 /* Photos.swift in Sources */,
 				341FD59D244E8A9500A22FCC /* ProfilePageViewController.swift in Sources */,
+				34148E332452207700F2EDF3 /* ProfileCollectionViewCell.swift in Sources */,
 				341FD5A9244F4D0800A22FCC /* Members.swift in Sources */,
 				341FD5A7244F4CA800A22FCC /* Member.swift in Sources */,
 				3453748A244E4DD200354A72 /* SpotDetailController.swift in Sources */,

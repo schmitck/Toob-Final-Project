@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseUI
 
 //private let dateFormatter: DateFormatter = {
 //    //just created a DATEFORMATTER
@@ -29,6 +31,7 @@ class SpotDetailController: UIViewController {
   
   let posts = Posts()
   var member: Member!
+  var photos = Photos()
   var totalRatingsCount: Double = 0
   var averageRating: Double = 0
   
@@ -37,7 +40,6 @@ class SpotDetailController: UIViewController {
     postsTableView.dataSource = self
     postsTableView.delegate = self
     posts.loadData(member: member) {
-      print("viewdidload")
       self.posts.postsArray.sort(by: {$0.postNumber > $1.postNumber})
       self.postsTableView.reloadData()
     }
@@ -45,7 +47,6 @@ class SpotDetailController: UIViewController {
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    print("viewwillappear")
   }
   
   override func viewDidAppear(_ animated: Bool) {
@@ -54,15 +55,13 @@ class SpotDetailController: UIViewController {
       totalRatingsCount = totalRatingsCount + Double(post.rating)
     }
     averageRating = totalRatingsCount/Double(posts.postsArray.count)
-    print("This is the total ratings! \(totalRatingsCount) and this is the average \(averageRating) from \(posts.postsArray.count) posts!")
     
     member.averageRating = averageRating
     member.saveData { (success) in
       if success {
-        print("saved the average rating! VIEWDIDAPPEAR")
+        print("")
       }
     }
-    print("viewDidAppear")
   }
   
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -93,6 +92,9 @@ class SpotDetailController: UIViewController {
     let newPost = source.post!
     newPost.description = source.newSpotTextView.text
     newPost.postNumber = source.postNumber + 1
+    newPost.documentUUID = source.post.documentUUID
+    newPost.image = source.takenOrChosenImage.image
+    newPost.postingUserID = Auth.auth().currentUser?.email ?? "Unknown Email"
     newPost.saveData(member: source.member) { (success) in
         if success {
               print("")
@@ -101,20 +103,26 @@ class SpotDetailController: UIViewController {
             }
     }
     posts.postsArray.append(newPost)
+    
+    //update the average rating
     totalRatingsCount = 0
     for post in posts.postsArray {
       print(post.rating)
       totalRatingsCount = totalRatingsCount + Double(post.rating)
     }
     averageRating = totalRatingsCount/Double(posts.postsArray.count)
-    print("This is the total ratings! \(totalRatingsCount) and this is the average \(averageRating) from \(posts.postsArray.count) posts!")
     
     member.averageRating = averageRating
     member.saveData { (success) in
       if success {
-        print("saved the average rating! VIEWDIDAPPEAR")
       }
     }
+    posts.loadData(member: member) {
+         self.posts.postsArray.sort(by: {$0.postNumber > $1.postNumber})
+         self.postsTableView.reloadData()
+       }
+    
+    self.postsTableView.reloadData()
   }
   
   
@@ -135,6 +143,7 @@ extension SpotDetailController: UITableViewDelegate, UITableViewDataSource {
     cell.descriptionLabel.text = posts.postsArray[indexPath.row].description
     cell.dateLabel.text = dateFormat(date: posts.postsArray[indexPath.row].date, format: "MMM d, yyyy")
     cell.timeLabel.text = dateFormat(date: posts.postsArray[indexPath.row].date, format: "h:mm a")
+    cell.postedImage.image = posts.postsArray[indexPath.row].image
     cell.postedImage?.roundBorder(cornerRadius: 30, width: 0, color: .init(genericGrayGamma2_2Gray: 1, alpha: 1))
     return cell
   }
