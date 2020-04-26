@@ -9,6 +9,8 @@
 import Foundation
 import CoreLocation
 import Firebase
+import FirebaseUI
+
 
 class Member {
   var place: String
@@ -17,14 +19,16 @@ class Member {
   var averageRating: Double
   var postingUserID: String
   var documentID: String
+  var coverPhotoUUID: String
+  var image: UIImage!
   
   var longitude: CLLocationDegrees {
     return coordinate.longitude
   }
   
   var latitude: CLLocationDegrees {
-     return coordinate.latitude
-   }
+    return coordinate.latitude
+  }
   
   var location: CLLocation {
     return CLLocation(latitude: latitude, longitude: longitude)
@@ -32,20 +36,23 @@ class Member {
   
   
   var dictionary: [String:Any] {
-    return ["place": place, "longitude": longitude, "latitude": latitude, "isSelected": isSelected, "averageRating": averageRating, "postingUserID": postingUserID]
+    return ["place": place, "longitude": longitude, "latitude": latitude, "isSelected": isSelected, "averageRating": averageRating, "postingUserID": postingUserID,
+            "coverPhotoUUID": coverPhotoUUID]
   }
   
-  init(place: String, coordinate: CLLocationCoordinate2D, isSelected: Bool, averageRating: Double, postingUserID: String, documentID: String) {
+  init(place: String, coordinate: CLLocationCoordinate2D, isSelected: Bool, averageRating: Double, postingUserID: String, documentID: String, coverPhotoUUID: String, image: UIImage) {
     self.place = place
     self.coordinate = coordinate
     self.isSelected = isSelected
     self.averageRating = averageRating
     self.postingUserID = postingUserID
     self.documentID = documentID
+    self.coverPhotoUUID = coverPhotoUUID
+    self.image = image
   }
   
   convenience init() {
-    self.init(place: "", coordinate: CLLocationCoordinate2D(), isSelected: false, averageRating: 0.0, postingUserID: "", documentID: "")
+    self.init(place: "", coordinate: CLLocationCoordinate2D(), isSelected: false, averageRating: 0.0, postingUserID: "", documentID: "", coverPhotoUUID: "", image: UIImage())
   }
   
   convenience init(dictionary: [String:Any]) {
@@ -56,11 +63,12 @@ class Member {
     let averageRating = dictionary["averageRating"] as! Double? ?? 0.0
     let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
     let postingUserID = dictionary["postingUserID"] as! String? ?? ""
+    let coverPhotoUUID = dictionary["coverPhotoUUID"] as! String? ?? ""
     
-    self.init(place: place, coordinate: coordinate, isSelected:isSelected, averageRating: averageRating, postingUserID: postingUserID, documentID: "")
+    self.init(place: place, coordinate: coordinate, isSelected:isSelected, averageRating: averageRating, postingUserID: postingUserID, documentID: "", coverPhotoUUID: coverPhotoUUID, image: UIImage())
   }
- 
- func saveData(completed: @escaping (Bool) -> ()) {
+  
+  func saveData(completed: @escaping (Bool) -> ()) {
     let db = Firestore.firestore()
     //grab the userID
     guard let postingUserID = (Auth.auth().currentUser?.uid) else {

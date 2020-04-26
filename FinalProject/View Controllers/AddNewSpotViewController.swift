@@ -20,14 +20,28 @@ class AddNewSpotViewController: UIViewController {
   var rating = [1,2,3,4,5,6,7,8,9,10]
   var post: Post!
   var member: Member!
-  var photo: Photo!
   var postNumber: Int = 0
   var imagePicker = UIImagePickerController()
-  var photos: Photos!
+  
+  @IBOutlet weak var takePhotoButton: UIButton!
+  
+  @IBOutlet weak var photoLibraryButton: UIButton!
+  
+  @IBOutlet weak var cancelButton: UIBarButtonItem!
+  
+  @IBOutlet weak var saveButton: UIBarButtonItem!
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     takenOrChosenImage.image = UIImage(named: "tooblogo")
     newSpotTextView.addBorder(width: 0.5, radius: 5, color: .gray)
+    
+    saveButton.setTitleTextAttributes([ NSAttributedString.Key.font: UIFont(name: "Courier New", size: 20)!], for: .normal)
+    cancelButton.setTitleTextAttributes([ NSAttributedString.Key.font: UIFont(name: "Courier New", size: 20)!], for: .normal)
+    takePhotoButton.titleLabel?.font = UIFont(name: "Courier New", size: 15)
+    photoLibraryButton.titleLabel?.font = UIFont(name: "Courier New", size: 15)
+    
+    
     guard member != nil else {
       print("***ERROR: Did not have a valid spot in review detail VC")
       return
@@ -39,7 +53,12 @@ class AddNewSpotViewController: UIViewController {
     ratingPickerView.dataSource = self
     imagePicker.delegate = self
     print(postNumber)
-    photos = Photos()
+    
+    NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+    
+    NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    
+    
   }
   
   
@@ -49,8 +68,22 @@ class AddNewSpotViewController: UIViewController {
     post.image = takenOrChosenImage.image
   }
   
+  
+  @objc func keyboardWillHide() {
+    self.view.frame.origin.y = 0
+  }
+  
   func leaveViewController() {
     dismiss(animated: true, completion: nil)
+  }
+  
+  @objc func keyboardWillChange(notification: NSNotification) {
+    
+    if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+      if newSpotTextView.isFirstResponder {
+        self.view.frame.origin.y = -keyboardSize.height
+      }
+    }
   }
   
   func showAlert(title: String, message: String) {
@@ -66,10 +99,9 @@ class AddNewSpotViewController: UIViewController {
       showAlert(title: "Must Include Photo in Post", message: "In order to share the stoke with all, you must post a photo of the waves.")
     } else {
       self.performSegue(withIdentifier: "unwindFromAddNewSpot", sender: self)
-      print("SAVED BUTTON HAS BEEN PRESSED")
     }
     
-  
+    
   }
   
   @IBAction func cancelButtonPressed(_ sender: UIBarButtonItem) {
@@ -117,7 +149,7 @@ extension AddNewSpotViewController: UIPickerViewDataSource, UIPickerViewDelegate
   }
   
   func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-    ratingLabel.text = "\(rating[row])"
+    post.rating = rating[row]
   }
 }
 

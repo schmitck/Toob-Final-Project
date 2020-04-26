@@ -10,33 +10,45 @@ import UIKit
 import CoreLocation
 import GoogleSignIn
 import FirebaseUI
+import Firebase
 
 class ViewController: UIViewController {
   
   @IBOutlet weak var searchButton: UIBarButtonItem!
   @IBOutlet weak var homeTableView: UITableView!
+  
+  @IBOutlet weak var editButton: UIBarButtonItem!
+  
+  
   var members = Members()
   var selectedMembers: Members!
   var member: Member!
-  var spot: Spot!
-  var spots: Spots!
   var authUI: FUIAuth!
   var averageRating: Double = 0
+  var locationManager: CLLocationManager!
+  var currentLocation: CLLocation!
+  
+  
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     let logo = UIImage(named: "tooblogo")
     let imageView = UIImageView(image: logo)
     imageView.contentMode = .scaleAspectFit
     self.navigationItem.titleView = imageView
+    editButton.setTitleTextAttributes([ NSAttributedString.Key.font: UIFont(name: "Courier New", size: 20)!], for: .normal)
+    searchButton.setTitleTextAttributes([ NSAttributedString.Key.font: UIFont(name: "Courier New", size: 20)!], for: .normal)
     authUI = FUIAuth.defaultAuthUI()
     authUI.delegate = self
-    spots = Spots()
     selectedMembers = Members()
     homeTableView.dataSource = self
     homeTableView.delegate = self
-    spot = Spot(spot: "", coordinate: CLLocationCoordinate2D(), documentID: "")
-    print("viewdid")
+    if self.selectedMembers.memberArray.isEmpty {
+      self.homeTableView.isHidden = true
+    }
     self.homeTableView.reloadData()
+    getLocation()
+    
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -46,12 +58,22 @@ class ViewController: UIViewController {
       for member in self.members.memberArray {
         if member.isSelected == true {
           //          print("🗣🗣🗣\(member.place) has beens selected because \(member.isSelected) reads true")
+          if member.averageRating.isNaN == true {
+            member.averageRating = 0
+          }
           self.selectedMembers.memberArray.append(member)
         }
+      }
+      if self.selectedMembers.memberArray.isEmpty {
+        self.homeTableView.isHidden = true
+      } else {
+        self.homeTableView.isHidden = false
       }
       self.homeTableView.reloadData()
     }
     print("viewWill")
+    getLocation()
+    homeTableView.reloadData()
   }
   
   
@@ -59,7 +81,11 @@ class ViewController: UIViewController {
     super.viewDidAppear(animated)
     signIn()
     print("viewDidAppear")
+    if self.selectedMembers.memberArray.isEmpty {
+      self.homeTableView.isHidden = true
+    }
     self.homeTableView.reloadData()
+    
     
   }
   
@@ -68,7 +94,7 @@ class ViewController: UIViewController {
       let destination = segue.destination as! SpotDetailController
       let selectedIndexPath = homeTableView.indexPathForSelectedRow!
       print("Selected Row: \(selectedIndexPath.row)")
-      destination.title = selectedMembers.memberArray[selectedIndexPath.row].place
+      destination.title = selectedMembers.memberArray[selectedIndexPath.row].place + "."
       destination.member = selectedMembers.memberArray[selectedIndexPath.row]
     }
   }
@@ -90,9 +116,18 @@ class ViewController: UIViewController {
       let loginViewController = authUI.authViewController()
       loginViewController.modalPresentationStyle = .fullScreen
       present(loginViewController, animated: true, completion: nil)
+      if self.selectedMembers.memberArray.isEmpty {
+        self.homeTableView.isHidden = true
+      } 
+      homeTableView.reloadData()
     } else {
-      homeTableView.isHidden = false
+      if self.selectedMembers.memberArray.isEmpty {
+        self.homeTableView.isHidden = true
+      } else {
+        homeTableView.isHidden = false
+      }
     }
+    homeTableView.reloadData()
   }
   
   @IBAction func unwindFromDetail(segue: UIStoryboardSegue) {
@@ -116,6 +151,10 @@ class ViewController: UIViewController {
       }
       self.homeTableView.reloadData()
     }
+    
+    
+    
+    
     
   }
   
@@ -142,10 +181,30 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = homeTableView.dequeueReusableCell(withIdentifier: "HomePageCell", for: indexPath) as! HomePageTableViewCell
+    if currentLocation != nil {
+      var distanceString = ""
+      let location = selectedMembers.memberArray[indexPath.row].location
+      let distanceInMeters = currentLocation.distance(from: location)
+      distanceString = "\((distanceInMeters * 0.00062137).roundTo(places: 1)) Miles Away."
+      cell.distanceLabel.text = distanceString
+    } else {
+      cell.distanceLabel.text = "\(selectedMembers.memberArray[indexPath.row].latitude), \(selectedMembers.memberArray[indexPath.row].longitude)"
+    }
     cell.spotLabel.text = selectedMembers.memberArray[indexPath.row].place
-    cell.distanceLabel.text = "\(selectedMembers.memberArray[indexPath.row].latitude), \(selectedMembers.memberArray[indexPath.row].longitude)"
     cell.ratingLabel.text = "\(selectedMembers.memberArray[indexPath.row].averageRating.roundTo(places: 2))"
-    cell.homePageImage?.roundBorder(cornerRadius: 20, width: 0, color: .init(genericGrayGamma2_2Gray: 1, alpha: 1))
+    if selectedMembers.memberArray[indexPath.row].coverPhotoUUID != "" {
+      let post = Posts()
+      post.loadData(member: selectedMembers.memberArray[indexPath.row]) {
+        print("getting image")
+        cell.homePageImage.image = post.postsArray.first?.image
+        cell.homePageImage?.roundBorder(cornerRadius: 20, width: 0, color: .init(genericGrayGamma2_2Gray: 1, alpha: 1))
+        cell.homePageImage.contentMode = .scaleAspectFill
+      }
+    } else {
+      cell.homePageImage.image = UIImage(named: "nophotos")
+      cell.homePageImage?.roundBorder(cornerRadius: 20, width: 0, color: .init(genericGrayGamma2_2Gray: 1, alpha: 1))
+      cell.homePageImage.contentMode = .scaleAspectFit
+    }
     return cell
     
   }
@@ -209,6 +268,58 @@ extension ViewController: FUIAuthDelegate {
     logoImageView.contentMode = .scaleAspectFit
     loginViewController.view.addSubview(logoImageView)
     return loginViewController
+  }
+  
+}
+
+extension ViewController: CLLocationManagerDelegate {
+  
+  func getLocation() {
+    locationManager = CLLocationManager()
+    locationManager.delegate = self
+  }
+  
+  func handleLocationAuthorizationStatus(status: CLAuthorizationStatus) {
+    switch status {
+    case .notDetermined:
+      locationManager.requestWhenInUseAuthorization()
+    case .authorizedAlways, .authorizedWhenInUse:
+      locationManager.requestLocation()
+    case .denied:
+      showAlertToPrivacySettings(title: "User has not authorized location services", message: "It may be that parental controls are restricting location use in the app")
+    default:
+      break
+    }
+  }
+  
+  func showAlertToPrivacySettings(title: String, message: String) {
+    let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+    guard let settingsURL = URL(string: UIApplication.openSettingsURLString) else {
+      print("Something went wrong with the URLString")
+      return
+    }
+    
+    let settingsAction = UIAlertAction(title: "Settings", style: .default) { value in
+      UIApplication.shared.open(settingsURL, options: [:], completionHandler: nil)
+    }
+    let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+    alertController.addAction(settingsAction)
+    alertController.addAction(cancelAction)
+    present(alertController, animated: true, completion: nil)
+    
+  }
+  
+  func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+    handleLocationAuthorizationStatus(status: status)
+  }
+  
+  func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    currentLocation = locations.last
+    print("CURRENT LOCATION IS \(currentLocation.coordinate.longitude), \(currentLocation.coordinate.latitude)")
+  }
+  
+  func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+    print("Failed to get user location")
   }
   
 }

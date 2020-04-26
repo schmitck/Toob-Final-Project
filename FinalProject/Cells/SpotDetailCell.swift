@@ -18,4 +18,6 @@ class SpotDetailCell: UITableViewCell {
   @IBOutlet weak var userLabel: UILabel!
   
   
+
+  
 }

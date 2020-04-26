@@ -10,37 +10,30 @@ import UIKit
 import Firebase
 import FirebaseUI
 
-//private let dateFormatter: DateFormatter = {
-//    //just created a DATEFORMATTER
-//    let dateFormatter = DateFormatter()
-//    dateFormatter.dateFormat = "EEEE"
-//    return dateFormatter
-//}()
-//
-//private let hourlyFormatter: DateFormatter = {
-//    //just created a DATEFORMATTER
-//    let dateFormatter = DateFormatter()
-//    dateFormatter.dateFormat = "h aaaa"
-//    return dateFormatter
-//}()
-
-
 class SpotDetailController: UIViewController {
   
   @IBOutlet weak var postsTableView: UITableView!
   
   let posts = Posts()
   var member: Member!
-  var photos = Photos()
   var totalRatingsCount: Double = 0
   var averageRating: Double = 0
+  @IBOutlet weak var favoritesButton: UIBarButtonItem!
   
+  @IBOutlet weak var addSpotButton: UIBarButtonItem!
   override func viewDidLoad() {
     super.viewDidLoad()
+    self.navigationController?.navigationBar.titleTextAttributes = [ NSAttributedString.Key.font: UIFont(name: "Courier New", size: 20)!]
+    favoritesButton.setTitleTextAttributes([ NSAttributedString.Key.font: UIFont(name: "Courier New", size: 20)!], for: .normal)
+    addSpotButton.setTitleTextAttributes([ NSAttributedString.Key.font: UIFont(name: "Courier New", size: 20)!], for: .normal)
     postsTableView.dataSource = self
     postsTableView.delegate = self
+    member.coverPhotoUUID = posts.postsArray.first?.documentUUID ?? ""
     posts.loadData(member: member) {
       self.posts.postsArray.sort(by: {$0.postNumber > $1.postNumber})
+      if self.posts.postsArray.count == 0 {
+        self.postsTableView.isHidden = true
+      }
       self.postsTableView.reloadData()
     }
   }
@@ -55,13 +48,18 @@ class SpotDetailController: UIViewController {
       totalRatingsCount = totalRatingsCount + Double(post.rating)
     }
     averageRating = totalRatingsCount/Double(posts.postsArray.count)
-    
+    member.coverPhotoUUID = posts.postsArray.first?.documentUUID ?? ""
     member.averageRating = averageRating
     member.saveData { (success) in
       if success {
         print("")
       }
     }
+    
+    if self.posts.postsArray.count == 0 {
+      self.postsTableView.isHidden = true
+    }
+    
   }
   
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -102,11 +100,11 @@ class SpotDetailController: UIViewController {
     newPost.image = source.takenOrChosenImage.image
     newPost.postingUserID = Auth.auth().currentUser?.email ?? "Unknown Email"
     newPost.saveData(member: source.member) { (success) in
-        if success {
-              print("")
-            } else {
-              print("Error: Couldn't leave this view controller because the data was not saved.")
-            }
+      if success {
+        print("")
+      } else {
+        print("Error: Couldn't leave this view controller because the data was not saved.")
+      }
     }
     posts.postsArray.append(newPost)
     
@@ -117,16 +115,16 @@ class SpotDetailController: UIViewController {
       totalRatingsCount = totalRatingsCount + Double(post.rating)
     }
     averageRating = totalRatingsCount/Double(posts.postsArray.count)
-    
+    member.coverPhotoUUID = source.post.documentUUID
     member.averageRating = averageRating
     member.saveData { (success) in
       if success {
       }
     }
     posts.loadData(member: member) {
-         self.posts.postsArray.sort(by: {$0.postNumber > $1.postNumber})
-         self.postsTableView.reloadData()
-       }
+      self.posts.postsArray.sort(by: {$0.postNumber > $1.postNumber})
+      self.postsTableView.reloadData()
+    }
     self.postsTableView.reloadData()
   }
   
@@ -150,11 +148,12 @@ extension SpotDetailController: UITableViewDelegate, UITableViewDataSource {
     cell.timeLabel.text = dateFormat(date: posts.postsArray[indexPath.row].date, format: "h:mm a")
     cell.postedImage.image = posts.postsArray[indexPath.row].image
     cell.postedImage?.roundBorder(cornerRadius: 30, width: 0, color: .init(genericGrayGamma2_2Gray: 1, alpha: 1))
+    cell.descriptionLabel.sizeToFit()
     return cell
   }
   
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    return 320
+    return 300
   }
   
 }

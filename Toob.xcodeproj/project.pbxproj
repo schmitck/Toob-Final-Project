@@ -13,12 +13,10 @@
 		341FD59D244E8A9500A22FCC /* ProfilePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341FD59C244E8A9500A22FCC /* ProfilePageViewController.swift */; };
 		341FD59F244E936A00A22FCC /* UIView+addBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341FD59E244E936900A22FCC /* UIView+addBorder.swift */; };
 		341FD5A1244F282100A22FCC /* UIImageView+roundedImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341FD5A0244F282100A22FCC /* UIImageView+roundedImages.swift */; };
-		341FD5A3244F37B100A22FCC /* Spots.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341FD5A2244F37B000A22FCC /* Spots.swift */; };
 		341FD5A5244F3E4F00A22FCC /* NewSpotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341FD5A4244F3E4F00A22FCC /* NewSpotViewController.swift */; };
 		341FD5A7244F4CA800A22FCC /* Member.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341FD5A6244F4CA800A22FCC /* Member.swift */; };
 		341FD5A9244F4D0800A22FCC /* Members.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341FD5A8244F4D0800A22FCC /* Members.swift */; };
 		341FD5B0244F727200A22FCC /* SpotDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341FD5AF244F727200A22FCC /* SpotDetailCell.swift */; };
-		341FD5B6244F864300A22FCC /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341FD5B5244F864300A22FCC /* Photo.swift */; };
 		3453746F244E3DCC00354A72 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3453746E244E3DCC00354A72 /* AppDelegate.swift */; };
 		34537471244E3DCC00354A72 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34537470244E3DCC00354A72 /* SceneDelegate.swift */; };
 		34537473244E3DCC00354A72 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34537472244E3DCC00354A72 /* ViewController.swift */; };
@@ -29,9 +27,7 @@
 		34537486244E453900354A72 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34537485244E453900354A72 /* Post.swift */; };
 		3453748A244E4DD200354A72 /* SpotDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34537489244E4DD200354A72 /* SpotDetailController.swift */; };
 		3453748F244E5BC400354A72 /* AddNewSpotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3453748E244E5BC400354A72 /* AddNewSpotViewController.swift */; };
-		34537491244E5FCE00354A72 /* Spot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34537490244E5FCE00354A72 /* Spot.swift */; };
 		34537493244E61A800354A72 /* Posts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34537492244E61A800354A72 /* Posts.swift */; };
-		345447AA2450F847008EE1F0 /* Photos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 345447A92450F847008EE1F0 /* Photos.swift */; };
 		3465CF432450EBE900753020 /* roundTo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3465CF422450EBE900753020 /* roundTo.swift */; };
 /* End PBXBuildFile section */
 
@@ -41,13 +37,11 @@
 		341FD59C244E8A9500A22FCC /* ProfilePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePageViewController.swift; sourceTree = "<group>"; };
 		341FD59E244E936900A22FCC /* UIView+addBorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+addBorder.swift"; sourceTree = "<group>"; };
 		341FD5A0244F282100A22FCC /* UIImageView+roundedImages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+roundedImages.swift"; sourceTree = "<group>"; };
-		341FD5A2244F37B000A22FCC /* Spots.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spots.swift; sourceTree = "<group>"; };
 		341FD5A4244F3E4F00A22FCC /* NewSpotViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewSpotViewController.swift; sourceTree = "<group>"; };
 		341FD5A6244F4CA800A22FCC /* Member.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Member.swift; sourceTree = "<group>"; };
 		341FD5A8244F4D0800A22FCC /* Members.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Members.swift; sourceTree = "<group>"; };
 		341FD5AF244F727200A22FCC /* SpotDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotDetailCell.swift; sourceTree = "<group>"; };
-		341FD5B5244F864300A22FCC /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
-		3453746B244E3DCC00354A72 /* FinalProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FinalProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3453746B244E3DCC00354A72 /* Toob.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Toob.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3453746E244E3DCC00354A72 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		34537470244E3DCC00354A72 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		34537472244E3DCC00354A72 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -59,9 +53,7 @@
 		34537485244E453900354A72 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		34537489244E4DD200354A72 /* SpotDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotDetailController.swift; sourceTree = "<group>"; };
 		3453748E244E5BC400354A72 /* AddNewSpotViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewSpotViewController.swift; sourceTree = "<group>"; };
-		34537490244E5FCE00354A72 /* Spot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spot.swift; sourceTree = "<group>"; };
 		34537492244E61A800354A72 /* Posts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Posts.swift; sourceTree = "<group>"; };
-		345447A92450F847008EE1F0 /* Photos.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photos.swift; sourceTree = "<group>"; };
 		3465CF422450EBE900753020 /* roundTo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = roundTo.swift; sourceTree = "<group>"; };
 		6C20BF10EE54137A779C71DA /* Pods-FinalProject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FinalProject.debug.xcconfig"; path = "Target Support Files/Pods-FinalProject/Pods-FinalProject.debug.xcconfig"; sourceTree = "<group>"; };
 		74CF1A07B54C2ACE59B67A92 /* Pods-FinalProject.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FinalProject.release.xcconfig"; path = "Target Support Files/Pods-FinalProject/Pods-FinalProject.release.xcconfig"; sourceTree = "<group>"; };
@@ -112,7 +104,7 @@
 		3453746C244E3DCC00354A72 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				3453746B244E3DCC00354A72 /* FinalProject.app */,
+				3453746B244E3DCC00354A72 /* Toob.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -129,8 +121,8 @@
 				3453748D244E5A9400354A72 /* View Controllers */,
 				341FD5AC244F71B500A22FCC /* Cells */,
 				34537474244E3DCC00354A72 /* Main.storyboard */,
-				34537477244E3DD700354A72 /* Assets.xcassets */,
 				34537479244E3DD700354A72 /* LaunchScreen.storyboard */,
+				34537477244E3DD700354A72 /* Assets.xcassets */,
 				341FD59A244E807700A22FCC /* GoogleService-Info.plist */,
 				3453747C244E3DD700354A72 /* Info.plist */,
 			);
@@ -140,14 +132,10 @@
 		34537484244E44F700354A72 /* Structs and Classes */ = {
 			isa = PBXGroup;
 			children = (
-				34537490244E5FCE00354A72 /* Spot.swift */,
-				341FD5A2244F37B000A22FCC /* Spots.swift */,
 				341FD5A6244F4CA800A22FCC /* Member.swift */,
 				341FD5A8244F4D0800A22FCC /* Members.swift */,
 				34537485244E453900354A72 /* Post.swift */,
 				34537492244E61A800354A72 /* Posts.swift */,
-				341FD5B5244F864300A22FCC /* Photo.swift */,
-				345447A92450F847008EE1F0 /* Photos.swift */,
 			);
 			path = "Structs and Classes";
 			sourceTree = "<group>";
@@ -192,7 +180,7 @@
 			);
 			name = FinalProject;
 			productName = FinalProject;
-			productReference = 3453746B244E3DCC00354A72 /* FinalProject.app */;
+			productReference = 3453746B244E3DCC00354A72 /* Toob.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -310,18 +298,14 @@
 				3453748F244E5BC400354A72 /* AddNewSpotViewController.swift in Sources */,
 				3465CF432450EBE900753020 /* roundTo.swift in Sources */,
 				34537486244E453900354A72 /* Post.swift in Sources */,
-				341FD5A3244F37B100A22FCC /* Spots.swift in Sources */,
 				3453746F244E3DCC00354A72 /* AppDelegate.swift in Sources */,
 				341FD5A5244F3E4F00A22FCC /* NewSpotViewController.swift in Sources */,
 				34537471244E3DCC00354A72 /* SceneDelegate.swift in Sources */,
-				345447AA2450F847008EE1F0 /* Photos.swift in Sources */,
 				341FD59D244E8A9500A22FCC /* ProfilePageViewController.swift in Sources */,
 				34148E332452207700F2EDF3 /* ProfileCollectionViewCell.swift in Sources */,
 				341FD5A9244F4D0800A22FCC /* Members.swift in Sources */,
 				341FD5A7244F4CA800A22FCC /* Member.swift in Sources */,
 				3453748A244E4DD200354A72 /* SpotDetailController.swift in Sources */,
-				34537491244E5FCE00354A72 /* Spot.swift in Sources */,
-				341FD5B6244F864300A22FCC /* Photo.swift in Sources */,
 				341FD5A1244F282100A22FCC /* UIImageView+roundedImages.swift in Sources */,
 				341FD5B0244F727200A22FCC /* SpotDetailCell.swift in Sources */,
 				341FD59F244E936A00A22FCC /* UIView+addBorder.swift in Sources */,
@@ -479,7 +463,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = schmitck.FinalProject;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Toob;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -498,7 +482,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = schmitck.FinalProject;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Toob;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

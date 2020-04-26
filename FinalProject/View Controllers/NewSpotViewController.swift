@@ -44,14 +44,6 @@ class NewSpotViewController: UIViewController {
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     let selectedIndexPath = searchSpotsTableView.indexPathForSelectedRow!
     choosenSpot = members.memberArray[selectedIndexPath.row]
-//    if choosenSpot.isSelected == true {
-//      shouldPerformSegue(withIdentifier: "AddNewSpot") {
-//      return false
-//      }
-//      print("Already chosen!")
-//      showAlert(title: "Already Chosen!", message: "Choose a different!")
-//    }
-    
   }
   
   func showAlert(title: String, message: String) {
@@ -68,7 +60,7 @@ extension NewSpotViewController: UITableViewDelegate, UITableViewDataSource {
     if searchActive == true {
       return filtererdData.count
     } else {
-    return members.memberArray.count
+      return members.memberArray.count
     }
   }
   

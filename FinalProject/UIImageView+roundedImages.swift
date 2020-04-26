@@ -21,6 +21,6 @@ extension UIImageView {
     self.clipsToBounds = true
     self.layer.borderColor = color
     self.layer.borderWidth = width
-   }
-   
+  }
+  
 }

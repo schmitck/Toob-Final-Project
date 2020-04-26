@@ -34,7 +34,7 @@ class Posts {
       }
       //clear out spotArray, which is everything in our tableView, so there will be no duplicates
       self.postsArray = []
-      var loadAttemps = 0
+      var loadAttempts = 0
       let storageRef = storage.reference().child(member.documentID)
       //there are querySnapshot documnets
       for document in querySnapshot!.documents {
@@ -44,18 +44,18 @@ class Posts {
         self.postsArray.append(post)
         
         let photoRef = storageRef.child(post.documentUUID)
-        photoRef.getData(maxSize: 25 * 1025 * 1026) { (data, error) in
+        photoRef.getData(maxSize: 25 * 1025 * 1025) { (data, error) in
           if let error = error {
             print("Error: an error occured while reading in the photo data \(photoRef) \(error.localizedDescription)")
-            loadAttemps += 1
-            if loadAttemps >= (querySnapshot!.count) {
+            loadAttempts += 1
+            if loadAttempts >= (querySnapshot!.count) {
               return completed()
             }
           } else {
             let image = UIImage(data: data!)
             post.image = image!
-            loadAttemps += 1
-            if loadAttemps >= (querySnapshot!.count) {
+            loadAttempts += 1
+            if loadAttempts >= (querySnapshot!.count) {
               return completed()
             }
           }

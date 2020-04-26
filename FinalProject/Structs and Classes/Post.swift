@@ -112,7 +112,6 @@ class Post {
           print("***ERROR: Updating document \(self.documentID) \(error.localizedDescription)")
           completed(false)
         } else {
-          print("Document updated with the ref ID \(reference?.documentID ?? "Unknown")")
           completed(true)
         }
       }
@@ -139,7 +138,6 @@ class Post {
           print("***ERROR: Updating document \(self.documentUUID) \(error.localizedDescription)")
           completed(false)
         } else {
-          print("Document updated with the ref ID \(reference.documentID)")
           completed(true)
         }
       }

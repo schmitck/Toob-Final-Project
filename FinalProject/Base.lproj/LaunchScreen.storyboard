@@ -15,12 +15,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="tooblogo" translatesAutoresizingMaskIntoConstraints="NO" id="2qK-Bh-yah">
-                                <rect key="frame" x="7" y="248" width="400" height="400"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launchscreen" translatesAutoresizingMaskIntoConstraints="NO" id="2qK-Bh-yah">
+                                <rect key="frame" x="83" y="309" width="248" height="280"/>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="2qK-Bh-yah" secondAttribute="trailing" constant="83" id="2IX-CL-ms2"/>
+                            <constraint firstItem="2qK-Bh-yah" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="265" id="HPy-Ck-6F4"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="2qK-Bh-yah" secondAttribute="bottom" constant="273" id="R6i-2b-R8y"/>
+                            <constraint firstItem="2qK-Bh-yah" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="83" id="jtI-Vf-unN"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                 </viewController>
@@ -30,6 +35,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="tooblogo" width="1022" height="1022"/>
+        <image name="launchscreen" width="758" height="694"/>
     </resources>
 </document>
